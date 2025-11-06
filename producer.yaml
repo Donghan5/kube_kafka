@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-producer
+  namespace: kafka
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-producer
+  template:
+    metadata:
+      labels:
+        app: kafka-producer
+    spec:
+      containers:
+        - name: producer
+          image: quay.io/strimzi/kafka:0.38.0-kafka-3.6.0
+          command: ["/bin/sh", "-c"]
+          args:
+          - |
+            echo "Starting producer..."
+            export KAFKA_BOOTSTRAP_SERVERS=my-cluster-kafka-bootstrap.kafka:9092
+            export TOPIC_NAME=logs
+
+            bin/kafka-topics.sh --create --if-not-exists --topic $TOPIC_NAME \
+              --bootstrap-server $KAFKA_BOOTSTRAP_SERVERS --replication-factor 1 --partitions 1
+
+            while true; do
+              MESSAGE="Hello Kafka time: $(date)"
+              echo $MESSAGE | bin/kafka-console-producer.sh --broker-list $KAFKA_BOOTSTRAP_SERVERS --topic $TOPIC_NAME
+              echo "Sent: $MESSAGE"
+              sleep 10
+            done

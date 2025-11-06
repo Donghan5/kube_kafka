@@ -1,0 +1,21 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  name: my-cluster
+  namespace: kafka
+spec:
+  kafka:
+    replicas: 1
+    storage:
+      type: ephemeral
+    listeners:
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+  zookeeper:
+    replicas: 1
+    storage:
+      type: ephemeral
+  entityOperator:
+    topicOperator: {}
