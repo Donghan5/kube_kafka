@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress # Ingress for webapp (information service (path: /))
+metadata:
+  name: webapp-ingress
+  namespace: kafka
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: webapp-svc
+            port:
+              number: 80
