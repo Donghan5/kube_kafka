@@ -16,7 +16,7 @@ spec:
       containers:
       - name: webapp
         image: nginxdemos/hello:plain-text # To test in simplest way
-        # image: nginxdemos/hello:non-existent-tag # To test Rollout failure
+        #image: nginxdemos/hello:non-existent-tag # To test Rollout failure
         ports:
         - containerPort: 80
 ---

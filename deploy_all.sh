@@ -38,7 +38,8 @@ log_info "Deploying Strimzi Operator (Installing Kafka CRD)..."
 kubectl apply -f 'https://strimzi.io/install/latest?namespace=kafka' -n kafka
 
 log_info "Waiting until Strimzi Operator is ready..."
-kubectl wait deployment/strimzi-cluster-operator --for=condition=Available --timeout=300s -n kafka
+# Wait for the Strimzi Operator deployment to be available (testing in hotspot mode)
+kubectl wait deployment/strimzi-cluster-operator --for=condition=Available --timeout=600s -n kafka
 log_info "Strimzi Operator is ready."
 
 log_info "Deploying Kafka cluster (my-cluster)..."
