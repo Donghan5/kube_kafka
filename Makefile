@@ -10,12 +10,12 @@ fclean: clean
 	minikube delete
 
 rollout-check:
-    @echo "Checking rollout status for webapp (Deployment)..."
-    kubectl rollout status deployment/webapp -n kafka
-    @echo "Checking rollout status for postgres-db (StatefulSet)..."
-    kubectl rollout status statefulset/postgres-db -n kafka
-    @echo "Watching Pod changes in real-time (Press Ctrl+C to stop)..."
-    kubectl get pods -n kafka -w
+	@echo "Checking rollout status for webapp (Deployment)..."
+	kubectl rollout status deployment/webapp -n kafka
+	@echo "Checking rollout status for postgres-db (StatefulSet)..."
+	kubectl rollout status statefulset/postgres-db -n kafka
+	@echo "Watching Pod changes in real-time (Press Ctrl+C to stop)..."
+	kubectl get pods -n kafka -w
 
 rollback:
 	@echo "Checking rollout history for webapp deployment..."

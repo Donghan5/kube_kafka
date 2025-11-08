@@ -5,17 +5,25 @@ metadata:
   namespace: kafka
 spec:
   kafka:
-    replicas: 1
-    storage:
-      type: ephemeral
     listeners:
       - name: plain
         port: 9092
         type: internal
         tls: false
-  zookeeper:
-    replicas: 1
-    storage:
-      type: ephemeral
   entityOperator:
     topicOperator: {}
+--- 
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaNodePool
+metadata:
+  name: my-cluster-pool
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: my-cluster
+spec:
+  replicas: 1
+  roles:
+    - broker
+    - controller
+  storage:
+    type: ephemeral

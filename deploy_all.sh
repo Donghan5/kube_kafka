@@ -44,6 +44,10 @@ log_info "Strimzi Operator is ready."
 log_info "Deploying Kafka cluster (my-cluster)..."
 kubectl apply -f kafka/kafka-cluster.yaml -n kafka
 
+log_info "Waiting for Kafka cluster 'my-cluster' to be ready..."
+kubectl wait kafka/my-cluster --for=condition=Ready --timeout=300s -n kafka
+log_info "Kafka cluster is ready."
+
 log_info "Deploying Producer application..."
 kubectl apply -f kafka/producer.yaml -n kafka
 
@@ -51,10 +55,10 @@ log_info "Deploying Consumer application..."
 kubectl apply -f kafka/consumer.yaml -n kafka
 
 log_info "Deploying PostgreSQL Secret..."
-kubectl apply -f postgres/postgres-secret.yaml -n kafka
+kubectl apply -f postgre/postgre-secret.yaml -n kafka
 
 log_info "Deploying PostgreSQL StatefulSet..."
-kubectl apply -f postgres/postgres-deployment.yaml -n kafka
+kubectl apply -f postgre/postgre-deployment.yaml -n kafka
 
 log_info "Deploying WebApp (for Rollout tests)..."
 kubectl apply -f webapp/webapp.yaml -n kafka
